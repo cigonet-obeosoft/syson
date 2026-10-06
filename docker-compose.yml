@@ -20,10 +20,20 @@ services:
     # Built from the working tree by docker compose build; see Dockerfile for required credentials.
     build:
       context: .
+      target: ${BUILD_TARGET:-source}
       args:
         - USERNAME
       secrets:
         - github_token
+      labels:
+        org.opencontainers.image.created: "${IMAGE_CREATED:-}"
+        org.opencontainers.image.description: "${IMAGE_DESCRIPTION:-}"
+        org.opencontainers.image.licenses: "${IMAGE_LICENSES:-}"
+        org.opencontainers.image.revision: "${IMAGE_REVISION:-}"
+        org.opencontainers.image.source: "${IMAGE_SOURCE:-https://github.com/eclipse-syson/syson}"
+        org.opencontainers.image.title: "${IMAGE_TITLE:-SysON}"
+        org.opencontainers.image.url: "${IMAGE_URL:-https://github.com/eclipse-syson/syson}"
+        org.opencontainers.image.version: "${IMAGE_VERSION:-}"
     ports:
       - "${HOST_PORT:-8080}:8080"
     environment:
